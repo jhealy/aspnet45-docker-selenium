@@ -142,31 +142,6 @@ namespace SeleniumDockerTest
             return;
         }
 
-        static public void TestHTML5Driver()
-        {
-            Console.WriteLine("testing html5 driver");
-            try
-            {
-                using (IWebDriver html5Driver = new OpenQA.Selenium.Html5())
-                {
-
-                    html5Driver.Navigate().GoToUrl(m_targetUrl);
-                    html5Driver.FindElement(By.Id("myText")).SendKeys("probably nothing");
-                }
-            }
-            catch (Exception ex)
-            {
-                ConsoleColor oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(@"!!!" + ex.ToString());
-                Console.ForegroundColor = oldColor;
-            }
-
-            Console.WriteLine("html5 driver test run completed");
-
-            return;
-        }
-
         private static void DoFirefoxTests()
         {
             Console.WriteLine("firefox tests commencing");
@@ -180,7 +155,7 @@ namespace SeleniumDockerTest
                 options.AddArgument("--headless");
                 Console.WriteLine("--headless");
 
-                using (firefoxDriver = new FirefoxDriver(options)
+                using (firefoxDriver = new FirefoxDriver(options))
                 {
                     firefoxDriver.Navigate().GoToUrl(m_targetUrl);
 
