@@ -9,10 +9,33 @@ This is my personal quest to have a  docker image that
 
 Current status - blows out with the WebDriver Timeout error (see below) when SeleneiumDockerText.exe is run inside the docker container.  Occurs with either FireFox or Chrome tests.
 
+## TRY IT YOURSELF
+
+There is a docker image with Windows, IIS, Chrome, FF and some tests at https://cloud.docker.com/repository/docker/jhealy62/devfish .
+
+Pull it down the repo and provision it
+
+* docker pull jhealy62/devfish
+* docker run -d --name aspnettest -p 5000:80 jhealy62/devfish
+
+Powershell into the container
+
+* docker exec -it aspnettest powershell
+
+Inside the docker container, see the web server working
+
+* curl http://localhost -UseBasicParsing
+
+See the seleniumtest failing:
+
+* cd \
+* cd \seleniumtests
+* .\SeleniumDockerTests.exe http://localhost
+
+Cry with me!
+
 ## NEXT STEPS
 
-* Build out dockerfile for full aspnet45 with chrome and ff baked in.  Set as base image.  Push to personal dockerhub.
-* Build out dockerfile folks can use to see the test run and fail!  yay!
 * Once dockerimage with problem is pushed, update various pleas for help and enumerate them here.
 * Go 1/1 with some experts that have offered to look at this.
 
@@ -23,6 +46,7 @@ Current status - blows out with the WebDriver Timeout error (see below) when Sel
 * Chrome and FF both crash with the same error.  I've tried a ton of driver options, none of which work.  Keep suggesting, I'll start enumerating here which ones I've tried.
 ** Moved up selenium driver from 3.14.0 selenium to 4.0.0-alpha01 drivers….
 * EXPOSE PORT - wont work as port varies between runs
+* Timeouts up to 130 seconds in various forms after starting driver
 * Searched selenium hq for "localhost timed out"
 * Searched seleniumhq for "docker timeout remote webdriver"
 * *WebDriverWait from  https://stackoverflow.com/questions/31336554/selenium-c-webdriverwait-timeout
