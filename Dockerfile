@@ -34,13 +34,10 @@ COPY ./assets/firefox /seleniumtests/assets
 RUN [ "c:/seleniumtests/assets/firefox_setup_66.0.3.exe", "-ms"]
 
 # choco chrome takes a bit
-RUN echo 'Downloading chocolatey...'
-RUN powershell -Command Install-PackageProvider -name chocolatey -Force
-RUN powershell -Command Set-PackageSource -Name chocolatey -Trusted
-RUN powershell -Command Get-PackageSource
-
-# Install PhantomJS
-RUN powershell -Command Install-Package PhantomJS
+# RUN echo 'Downloading chocolatey...'
+# RUN powershell -Command Install-PackageProvider -name chocolatey -Force
+# RUN powershell -Command Set-PackageSource -Name chocolatey -Trusted
+# RUN powershell -Command Get-PackageSource
 
 # RUN echo 'Install Chrome via chocolatey...'
 # RUN powershell -Command Install-Package GoogleChrome -MinimumVersion 74

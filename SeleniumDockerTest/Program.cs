@@ -155,6 +155,12 @@ namespace SeleniumDockerTest
                 options.AddArgument("--headless");
                 Console.WriteLine("--headless");
 
+
+                // fix attempt from jetman1981 @ https://www.bountysource.com/issues/54757000-the-http-request-to-the-remote-webdriver-server-for-url-http-localhost-42607-session-timed-out-after-60-seconds
+                // same timeout error 
+                // Console.WriteLine(@"fix attempt from jetman1981 @ https://www.bountysource.com/issues/54757000-the-http-request-to-the-remote-webdriver-server-for-url-http-localhost-42607-session-timed-out-after-60-seconds");
+                // using ( firefoxDriver = new FirefoxDriver( ".", options, TimeSpan.FromSeconds(130)))
+                
                 using (firefoxDriver = new FirefoxDriver(options))
                 {
                     firefoxDriver.Navigate().GoToUrl(m_targetUrl);
