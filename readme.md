@@ -38,7 +38,7 @@ Cry with me!
 
 * Go 1/1 with some experts that have offered to look at this.
 * Watch StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
-* Watch SeleniumHQ - pending url
+* Watch SeleniumHQ - https://groups.google.com/forum/#!topic/selenium-users/3y29poIqvAU
 * Watch github issue on selenium - https://github.com/SeleniumHQ/selenium/issues/7150
 
 ## WHAT I HAVE TRIED
@@ -51,7 +51,7 @@ Cry with me!
 * Timeouts up to 130 seconds in various forms after starting driver
 * Searched selenium hq for "localhost timed out"
 * Searched seleniumhq for "docker timeout remote webdriver"
-* *WebDriverWait from  https://stackoverflow.com/questions/31336554/selenium-c-webdriverwait-timeout
+* WebDriverWait from  https://stackoverflow.com/questions/31336554/selenium-c-webdriverwait-timeout
 * Phantomjs is dead for selenium - https://stackoverflow.com/questions/20711407/selenium-webdriver-phantomjs-c-sharp-always-opens-a-cmd-window
 Search seleniumhq for docker - nothing there
 
