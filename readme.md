@@ -13,6 +13,7 @@ Current status - blows out with the WebDriver Timeout error (see below) when Sel
 
 * Build out dockerfile for full aspnet45 with chrome and ff baked in.  Set as base image.  Push to personal dockerhub.
 * Build out dockerfile folks can use to see the test run and fail!  yay!
+* Once dockerimage with problem is pushed, update various pleas for help and enumerate them here.
 * Go 1/1 with some experts that have offered to look at this.
 
 ## WHAT I HAVE TRIED
