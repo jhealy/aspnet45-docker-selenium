@@ -5,7 +5,7 @@
 
 # specific project assets
 assets/downloads
-installers
+./installers/
 
 # User-specific files
 *.rsuser
