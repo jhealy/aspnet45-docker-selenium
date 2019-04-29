@@ -105,8 +105,6 @@ namespace SeleniumDockerTest
                 chromeDriver.Navigate().GoToUrl(m_targetUrl);
                 chromeDriver.FindElement(By.Id("myText")).SendKeys("probably nothing");
             }
-
-            return;
         }
 
         static public void TestFireFoxDriver()
@@ -138,8 +136,6 @@ namespace SeleniumDockerTest
             }
 
             Console.WriteLine("firefox driver test run completed");
-
-            return;
         }
 
         private static void DoFirefoxTests()

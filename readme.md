@@ -36,8 +36,10 @@ Cry with me!
 
 ## NEXT STEPS
 
-* Once dockerimage with problem is pushed, update various pleas for help and enumerate them here.
 * Go 1/1 with some experts that have offered to look at this.
+* Watch StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
+* Watch SeleniumHQ - pending url
+* Watch github issue on selenium - https://github.com/SeleniumHQ/selenium/issues/7150
 
 ## WHAT I HAVE TRIED
 
