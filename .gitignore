@@ -4,8 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # specific project assets
-/assets/downloads/*
-/installers/*
+assets/downloads/
+installers/
 
 # User-specific files
 *.rsuser
