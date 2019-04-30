@@ -107,36 +107,36 @@ namespace SeleniumDockerTest
             }
         }
 
-        static public void TestFireFoxDriver()
-        {
-            Console.WriteLine("testing firefox driver");
-            try
-            {
-                FirefoxOptions options = new FirefoxOptions();
-                string fflocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
-                options.BrowserExecutableLocation = fflocation;
-                Console.WriteLine("BrowserExecutableLocation=" + fflocation);
-                options.AddArgument("--headless");
-                Console.WriteLine("--headless");
+        //static public void TestFireFoxDriver()
+        //{
+        //    Console.WriteLine("testing firefox driver");
+        //    try
+        //    {
+        //        FirefoxOptions options = new FirefoxOptions();
+        //        string fflocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
+        //        options.BrowserExecutableLocation = fflocation;
+        //        Console.WriteLine("BrowserExecutableLocation=" + fflocation);
+        //        options.AddArgument("-headless");
+        //        Console.WriteLine("-headless");
 
 
-                using (IWebDriver ffDriver = new FirefoxDriver(options))
-                {
+        //        using (IWebDriver ffDriver = new FirefoxDriver(options))
+        //        {
 
-                    ffDriver.Navigate().GoToUrl(m_targetUrl);
-                    ffDriver.FindElement(By.Id("myText")).SendKeys("probably nothing");
-                }
-            }
-            catch (Exception ex)
-            {
-                ConsoleColor oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(@"!!!" + ex.ToString());
-                Console.ForegroundColor = oldColor;
-            }
+        //            ffDriver.Navigate().GoToUrl(m_targetUrl);
+        //            ffDriver.FindElement(By.Id("myText")).SendKeys("probably nothing");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ConsoleColor oldColor = Console.ForegroundColor;
+        //        Console.ForegroundColor = ConsoleColor.Red;
+        //        Console.WriteLine(@"!!!" + ex.ToString());
+        //        Console.ForegroundColor = oldColor;
+        //    }
 
-            Console.WriteLine("firefox driver test run completed");
-        }
+        //    Console.WriteLine("firefox driver test run completed");
+        // }
 
         private static void DoFirefoxTests()
         {
@@ -148,8 +148,8 @@ namespace SeleniumDockerTest
             {
                 FirefoxOptions options = new FirefoxOptions();
                 options.BrowserExecutableLocation = fflocation;                
-                options.AddArgument("--headless");
-                Console.WriteLine("--headless");
+                options.AddArgument("-headless");
+                Console.WriteLine("-headless");
 
 
                 // fix attempt from jetman1981 @ https://www.bountysource.com/issues/54757000-the-http-request-to-the-remote-webdriver-server-for-url-http-localhost-42607-session-timed-out-after-60-seconds

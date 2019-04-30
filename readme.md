@@ -36,6 +36,7 @@ Cry with me!
 
 ## NEXT STEPS
 
+* New dockerfile from mcr. download issues on internal comp network, do this from home (wally)
 * Go 1/1 with some experts that have offered to look at this.
 * Watch StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
 * Watch SeleniumHQ - https://groups.google.com/forum/#!topic/selenium-users/3y29poIqvAU
@@ -54,6 +55,8 @@ Cry with me!
 * WebDriverWait from  https://stackoverflow.com/questions/31336554/selenium-c-webdriverwait-timeout
 * Phantomjs is dead for selenium - https://stackoverflow.com/questions/20711407/selenium-webdriver-phantomjs-c-sharp-always-opens-a-cmd-window
 Search seleniumhq for docker - nothing there
+* changing ff's "--headless" to "-headless".  fyi both work.
+* Running in the asp.net 4.6.1 container. Same error - webdriver 60 second timeout.
 
 ## WebDriver Timeout Error
 

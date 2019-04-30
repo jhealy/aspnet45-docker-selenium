@@ -1,5 +1,7 @@
 # FROM microsoft/aspnet
-FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8
+FROM mcr.microsoft.com/dotnet/framework/aspnet:4.6.2
+
+LABEL maintainer='jhealy at microsoft.com'
 
 # choco download failing behind msft proxy.  going the assets download route
 # fail refs out to https://onegetcdn.azureedge.net/providers/providers.masterList.feed.swidtag - need to resolve
@@ -20,6 +22,7 @@ FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8
 # OR just modify below to point to your specific exe
 # chrome installer download - extract out - https://www.google.com/chrome/?standalone=1
 # firefox installer download - https://www.mozilla.org/en-US/firefox/all/
+
 
 RUN mkdir installers 
 
