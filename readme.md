@@ -35,8 +35,9 @@ See the seleniumtest failing:
 Cry with me!
 
 ## NEXT STEPS
-* New dockerfile from mcr. download issues on internal comp network, do this from home (wally)
+* Only local?  maybe its blocking http://localhost:port?
 * Go 1/1 with some experts that have offered to look at this.
+* POSTED ISSUE - Aspnet docker github - https://github.com/Microsoft/aspnet-docker/issues/181
 * POSTED ISSUE - StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
 * POSTED ISSUE -  SeleniumHQ - https://groups.google.com/forum/#!topic/selenium-users/3y29poIqvAU
 * POSTED ISSUE - Github issue on selenium - Seleniu noted as "not a selenium issue" - https://github.com/SeleniumHQ/selenium/issues/7150
@@ -55,8 +56,9 @@ Cry with me!
 * Phantomjs is dead for selenium - https://stackoverflow.com/questions/20711407/selenium-webdriver-phantomjs-c-sharp-always-opens-a-cmd-window
 Search seleniumhq for docker - nothing there
 * changing ff's "--headless" to "-headless".  fyi both work.
-* Running in the asp.net 4.6.1 container. Same error - webdriver 60 second timeout.
+* Running in the asp.net 4.6.1 container. Same error - webdriver 60 second timeout (wally)
 * fixed 'nogpu' options per https://github.com/SeleniumHQ/selenium/issues/7150 - chrome starts, still fails, new error below
+* "--whitelisted-ips=http://localhost,https://localhost" - https://github.com/SeleniumHQ/selenium/commit/32e764df90abfe64f4b4591243da71c4b9dd00a2
 
 ## Chrome WebDriver Timeout Error
 

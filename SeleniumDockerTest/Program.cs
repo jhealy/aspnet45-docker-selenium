@@ -24,10 +24,10 @@ namespace SeleniumDockerTest
             ConsHelper.Msg("Target Url",m_targetUrl);
 
             // TestChromeDriver();
-            // DoChromeTests();
+            DoChromeTests();
 
             // TestFireFoxDriver();
-            DoFirefoxTests();
+            // DoFirefoxTests();
 
             ConsHelper.Pause();
         }
@@ -44,6 +44,9 @@ namespace SeleniumDockerTest
                 option.AddArguments("--window-size=1920,1080");
                 option.AddArguments("--disable-features=VizDisplayCompositor");
                 option.AddArguments("--disable-gpu");
+
+                // https://github.com/SeleniumHQ/selenium/commit/32e764df90abfe64f4b4591243da71c4b9dd00a2
+                // option.AddArguments("--whitelisted-ips=http://localhost,https://localhost");
 
                 //option.AddArgument("--no-sandbox");
                 //option.AddArgument("--dns-prefetch-disable");
