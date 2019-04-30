@@ -35,7 +35,6 @@ See the seleniumtest failing:
 Cry with me!
 
 ## NEXT STEPS
-* try chrome again with 'nogpu' options per https://github.com/SeleniumHQ/selenium/issues/7150 - update issue with result.....
 * New dockerfile from mcr. download issues on internal comp network, do this from home (wally)
 * Go 1/1 with some experts that have offered to look at this.
 * POSTED ISSUE - StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
@@ -57,6 +56,7 @@ Cry with me!
 Search seleniumhq for docker - nothing there
 * changing ff's "--headless" to "-headless".  fyi both work.
 * Running in the asp.net 4.6.1 container. Same error - webdriver 60 second timeout.
+* fixed 'nogpu' options per https://github.com/SeleniumHQ/selenium/issues/7150 - chrome starts, still fails, new error below
 
 ## Chrome WebDriver Timeout Error
 
