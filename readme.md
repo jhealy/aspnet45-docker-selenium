@@ -35,12 +35,12 @@ See the seleniumtest failing:
 Cry with me!
 
 ## NEXT STEPS
-
+* try chrome again with 'nogpu' options per https://github.com/SeleniumHQ/selenium/issues/7150 - update issue with result.....
 * New dockerfile from mcr. download issues on internal comp network, do this from home (wally)
 * Go 1/1 with some experts that have offered to look at this.
-* Watch StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
-* Watch SeleniumHQ - https://groups.google.com/forum/#!topic/selenium-users/3y29poIqvAU
-* Watch github issue on selenium - https://github.com/SeleniumHQ/selenium/issues/7150
+* POSTED ISSUE - StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
+* POSTED ISSUE -  SeleniumHQ - https://groups.google.com/forum/#!topic/selenium-users/3y29poIqvAU
+* POSTED ISSUE - Github issue on selenium - Seleniu noted as "not a selenium issue" - https://github.com/SeleniumHQ/selenium/issues/7150
 
 ## WHAT I HAVE TRIED
 
@@ -58,24 +58,22 @@ Search seleniumhq for docker - nothing there
 * changing ff's "--headless" to "-headless".  fyi both work.
 * Running in the asp.net 4.6.1 container. Same error - webdriver 60 second timeout.
 
-## WebDriver Timeout Error
+## Chrome WebDriver Timeout Error
 
 <pre>
-PS C:\seleniumtests> .\SeleniumDockerTest.exe
-Please pass a url for the target web as a parameter.   Example:  seleniumdockertext.exe http://localhost:32325
-PS C:\seleniumtests> .\SeleniumDockerTest.exe http://localhost
-Target Url=http://localhost
-chrome options include --headless --dns-prefetch-disable --disablefeatuers
-Starting ChromeDriver 74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}) on port 49164
+[Target Url] =[http://localhost]
+beginning chrome tests
+[chrome options:] =[--headless --window-size=1920,1080 --disable-features=VizDisplayCompositor --disable-gpu]
+Starting ChromeDriver 74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}) on port 49160
 Only local connections are allowed.
 Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
-[0427/172326.658:ERROR:network_change_notifier_win.cc(156)] WSALookupServiceBegin failed with: 0
-[0427/172326.673:ERROR:audio_device_listener_win.cc(46)] RegisterEndpointNotificationCallback failed: 80070424
+[0430/150246.015:ERROR:network_change_notifier_win.cc(156)] WSALookupServiceBegin failed with: 0
+[0430/150246.046:ERROR:audio_device_listener_win.cc(46)] RegisterEndpointNotificationCallback failed: 80070424
 
-DevTools listening on ws://127.0.0.1:49167/devtools/browser/920800fc-253a-4443-881d-925c21230f96
-[0427/172326.783:ERROR:browser_gpu_channel_host_factory.cc(139)] Failed to launch GPU process.
-[0427/172326.910:ERROR:network_change_notifier_win.cc(156)] WSALookupServiceBegin failed with: 0
-!!!error:OpenQA.Selenium.WebDriverException: The HTTP request to the remote WebDriver server for URL http://localhost:49164/session timed out after 60 seconds. ---> System.Net.WebException: The operation has timed out
+DevTools listening on ws://127.0.0.1:49163/devtools/browser/853e1883-9876-4fad-9dcc-6bf74c060baf
+[0430/150246.253:ERROR:network_change_notifier_win.cc(156)] WSALookupServiceBegin failed with: 0
+!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[exception caught] =[OpenQA.Selenium.WebDriverException: The HTTP request to the remote WebDriver server for URL http://localhost:49160/session timed out after 60 seconds. ---> System.Net.WebException: The operation has timed out
    at System.Net.HttpWebRequest.GetResponse()
    at OpenQA.Selenium.Remote.HttpCommandExecutor.MakeHttpRequest(HttpRequestInfo requestInfo)
    --- End of inner exception stack trace ---
@@ -87,7 +85,34 @@ DevTools listening on ws://127.0.0.1:49167/devtools/browser/920800fc-253a-4443-8
    at OpenQA.Selenium.Remote.RemoteWebDriver..ctor(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
    at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeDriverService service, ChromeOptions options, TimeSpan commandTimeout)
    at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeOptions options)
-   at SeleniumDockerTest.Program.Main(String[] args) in C:\dev\devfish-shares.git\docker-selenium-aspnet45\SeleniumDockerTest\Program.cs:line 44
+   at SeleniumDockerTest.Program.DoChromeTests() in C:\dev\docker-selenium-aspnet45.git\SeleniumDockerTest\Program.cs:line 53]
+!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Hit any key to continue
 </pre>
 
+## Firefox web driver timeout error
+<pre>
+PS C:\seleniumtests> .\seleniumdockertest.exe http://localhost
+[Target Url] =[http://localhost]
+firefox tests commencing
+BrowserExecutableLocation=C:\Program Files\Mozilla Firefox\firefox.exe
+-headless
+1556651472894   mozrunner::runner       INFO    Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ContainerAdministrator\\AppData\\Local\\Temp\\rust_mozprofile.hlVVZVvFg66U"
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!error:OpenQA.Selenium.WebDriverException: The HTTP request to the remote WebDriver server for URL http://localhost:49158/session timed out after 60 seconds. ---> System.Net.WebException: The request was aborted: The operation has timed out.
+   at System.Net.HttpWebRequest.GetResponse()
+   at OpenQA.Selenium.Remote.HttpCommandExecutor.MakeHttpRequest(HttpRequestInfo requestInfo)
+   --- End of inner exception stack trace ---
+   at OpenQA.Selenium.Remote.HttpCommandExecutor.MakeHttpRequest(HttpRequestInfo requestInfo)
+   at OpenQA.Selenium.Remote.HttpCommandExecutor.Execute(Command commandToExecute)
+   at OpenQA.Selenium.Remote.DriverServiceCommandExecutor.Execute(Command commandToExecute)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.StartSession(ICapabilities desiredCapabilities)
+   at OpenQA.Selenium.Remote.RemoteWebDriver..ctor(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
+   at OpenQA.Selenium.Firefox.FirefoxDriver..ctor(FirefoxOptions options)
+   at SeleniumDockerTest.Program.DoFirefoxTests() in C:\dev\docker-selenium-aspnet45.git\SeleniumDockerTest\Program.cs:line 150
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+firefox tests completed
+Hit any key to continue
+</pre>
 

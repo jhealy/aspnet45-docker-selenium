@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -19,33 +15,26 @@ namespace SeleniumDockerTest
         {
             if (args.Length == 0)
             {
-                ConsoleColor oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(@"Please pass a url for the target web as a parameter.   Example:  seleniumdockertext.exe http://localhost:32325");
-                Console.ForegroundColor = oldColor;
-
-                // Console.WriteLine("tests complete, hit enter to exit");
-                // Console.ReadLine();
-
+                ConsHelper.Err(@"Please pass a url for the target web as a parameter.   Example:  seleniumdockertext.exe http://localhost:32325");
                 return;
             }
 
             m_targetUrl = args[0].ToString();
 
-            Console.WriteLine($"Target Url={m_targetUrl}");
+            ConsHelper.Msg("Target Url",m_targetUrl);
 
             // TestChromeDriver();
-            //DoChromeTests();
+            // DoChromeTests();
 
             // TestFireFoxDriver();
             DoFirefoxTests();
 
-            Console.WriteLine("hit any key to continue");
-            Console.ReadLine();
+            ConsHelper.Pause();
         }
 
         private static void DoChromeTests()
         {
+            ConsHelper.Info("beginning chrome tests");
             IWebDriver chromeDriver;
             try
             {
@@ -59,20 +48,18 @@ namespace SeleniumDockerTest
                 //option.AddArgument("--no-sandbox");
                 //option.AddArgument("--dns-prefetch-disable");
 
+                ConsHelper.Info("chrome options:", option.DumpArguments());
 
-                Console.WriteLine("chrome options include --headless --dns-prefetch-disable --disablefeatures");
                 using (chromeDriver = new ChromeDriver(option))
                 {
                     chromeDriver.Navigate().GoToUrl(m_targetUrl);
 
                     //TestChromeDriver();
                     string msg = "hello world";
-                    Console.WriteLine($"CheckWebElements('{msg}')={CheckWebElements(msg,chromeDriver)}");
-                    msg = "Matias Bruno";
-                    Console.WriteLine($"CheckWebElements('{msg}')={CheckWebElements(msg,chromeDriver)}");
-
-                    //Console.WriteLine("tests complete, hit enter to exit");
-                    //Console.ReadLine();
+                    Console.WriteLine();
+                    ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
+                    msg = "Matias";
+                    ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
 
                     chromeDriver.Close();
                     chromeDriver.Quit();
@@ -80,7 +67,9 @@ namespace SeleniumDockerTest
             }
             catch (Exception ex)
             {
-                Console.WriteLine("!!!error:" + ex.ToString());
+                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                ConsHelper.Err("exception caught", ex.ToString());
+                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
         }
 
@@ -107,56 +96,57 @@ namespace SeleniumDockerTest
             }
         }
 
-        //static public void TestFireFoxDriver()
-        //{
-        //    Console.WriteLine("testing firefox driver");
-        //    try
-        //    {
-        //        FirefoxOptions options = new FirefoxOptions();
-        //        string fflocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
-        //        options.BrowserExecutableLocation = fflocation;
-        //        Console.WriteLine("BrowserExecutableLocation=" + fflocation);
-        //        options.AddArgument("-headless");
-        //        Console.WriteLine("-headless");
-
-
-        //        using (IWebDriver ffDriver = new FirefoxDriver(options))
-        //        {
-
-        //            ffDriver.Navigate().GoToUrl(m_targetUrl);
-        //            ffDriver.FindElement(By.Id("myText")).SendKeys("probably nothing");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ConsoleColor oldColor = Console.ForegroundColor;
-        //        Console.ForegroundColor = ConsoleColor.Red;
-        //        Console.WriteLine(@"!!!" + ex.ToString());
-        //        Console.ForegroundColor = oldColor;
-        //    }
-
-        //    Console.WriteLine("firefox driver test run completed");
-        // }
-
-        private static void DoFirefoxTests()
+        static public void TestFireFoxDriver()
         {
-            Console.WriteLine("firefox tests commencing");
+            Console.WriteLine("testing firefox driver");
+            try
+            {
+                FirefoxOptions options = new FirefoxOptions();
+                string fflocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
+                options.BrowserExecutableLocation = fflocation;
+                Console.WriteLine("BrowserExecutableLocation=" + fflocation);
+                options.AddArgument("-headless");
+                Console.WriteLine("-headless");
+
+
+                using (IWebDriver ffDriver = new FirefoxDriver(options))
+                {
+
+                    ffDriver.Navigate().GoToUrl(m_targetUrl);
+                    ffDriver.FindElement(By.Id("myText")).SendKeys("probably nothing");
+                }
+            }
+            catch (Exception ex)
+            {
+                ConsoleColor oldColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(@"!!!" + ex.ToString());
+                Console.ForegroundColor = oldColor;
+            }
+
+            Console.WriteLine("firefox driver test run completed");
+            // 
+
+        }
+            private static void DoFirefoxTests()
+        {
+            ConsHelper.Info("firefox tests commencing");
             string fflocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
-            Console.WriteLine("BrowserExecutableLocation=" + fflocation);
+            ConsHelper.Info("BrowserExecutableLocation=" + fflocation);
             IWebDriver firefoxDriver;
             try
             {
                 FirefoxOptions options = new FirefoxOptions();
                 options.BrowserExecutableLocation = fflocation;                
                 options.AddArgument("-headless");
-                Console.WriteLine("-headless");
+                ConsHelper.Info("-headless");
 
 
                 // fix attempt from jetman1981 @ https://www.bountysource.com/issues/54757000-the-http-request-to-the-remote-webdriver-server-for-url-http-localhost-42607-session-timed-out-after-60-seconds
                 // same timeout error 
                 // Console.WriteLine(@"fix attempt from jetman1981 @ https://www.bountysource.com/issues/54757000-the-http-request-to-the-remote-webdriver-server-for-url-http-localhost-42607-session-timed-out-after-60-seconds");
                 // using ( firefoxDriver = new FirefoxDriver( ".", options, TimeSpan.FromSeconds(130)))
-                
+
                 using (firefoxDriver = new FirefoxDriver(options))
                 {
                     firefoxDriver.Navigate().GoToUrl(m_targetUrl);
@@ -168,9 +158,9 @@ namespace SeleniumDockerTest
 
                     //TestChromeDriver();
                     string msg = "hello world";
-                    Console.WriteLine($"CheckWebElements('{msg}')={CheckWebElements(msg, firefoxDriver)}");
+                    ConsHelper.Info($"CheckWebElements('{msg}')={CheckWebElements(msg, firefoxDriver)}");
                     msg = "Matias";
-                    Console.WriteLine($"CheckWebElements('{msg}')={CheckWebElements(msg, firefoxDriver)}");
+                    ConsHelper.Info($"CheckWebElements('{msg}')={CheckWebElements(msg, firefoxDriver)}");
 
                     firefoxDriver.Close();
                     firefoxDriver.Quit();
@@ -178,9 +168,11 @@ namespace SeleniumDockerTest
             }
             catch (Exception ex)
             {
-                Console.WriteLine("!!!error:" + ex.ToString());
+                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                ConsHelper.Err("!!!error:" + ex.ToString());
+                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
-            Console.WriteLine("firefox tests completed");
+            ConsHelper.Info("firefox tests completed");
         }
 
     }
