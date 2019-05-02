@@ -3,6 +3,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 
 namespace SeleniumDockerTest
 {
@@ -32,7 +33,6 @@ namespace SeleniumDockerTest
             // TestChromeDriver();
             DoChromeTests();
 
-
             ConsHelper.Pause();
         }
 
@@ -52,7 +52,7 @@ namespace SeleniumDockerTest
                 // https://groups.google.com/a/chromium.org/forum/#!msg/headless-dev/qqbZVZ2IwEw/XMKlEMP3EQAJ
                 // must add --headless
                 // removed --single-process
-                option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "user-data-dir=/tmp/user-data", "--homedir=/tmp", "--disk-cache-dir=/tmp/cache-dir");
+                option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
 
                 // option.AddArguments("--disable-dev-shm-usage");
 
@@ -75,7 +75,7 @@ namespace SeleniumDockerTest
 
                 // https://stackoverflow.com/questions/42803545/how-to-enable-chromedriver-logging-in-from-the-selenium-webdriver
                 svc.EnableVerboseLogging = true;
-                svc.LogPath= "nightmare.txt";
+                svc.LogPath= "chromelog.txt";
 
                 using ( chromeDriver = new ChromeDriver(svc, option, TimeSpan.FromSeconds(60)))
                 {
