@@ -97,9 +97,9 @@ from tab crashed
    at SeleniumDockerTest.Program.DoChromeTests() in C:\dev\docker-selenium-aspnet45.git\SeleniumDockerTest\Program.cs:line 60]
 </pre>
 
-WebDriver Timeout error resolved -Occurs with either FireFox or Chrome tests inside docker container.  FIX (requires both items below): 
+WebDriver Timeout error resolved -Occurs with either FireFox or Chrome tests inside docker container.  FIX (requires both items below):
 
-* Install websocket's into the docker container.  Excerpt from dockerfile: 
+* Install websocket's into the docker container.  Excerpt from dockerfile:
 
 ```powershell
 RUN powershell -Command Add-WindowsFeature Web-WebSockets
@@ -136,11 +136,9 @@ See the seleniumtest failing:
 
 Cry with me!
 
-## NEXT STEPS.
+## NEXT STEPS
+
 * POSTED ISSUE - Aspnet docker github - https://github.com/Microsoft/aspnet-docker/issues/181
-* POSTED ISSUE - StackOverflow - https://stackoverflow.com/questions/55885154/selenium-chromedriver-test-fails-in-windows-docker-container-with-http-request-t
-* POSTED ISSUE -  SeleniumHQ - https://groups.google.com/forum/#!topic/selenium-users/3y29poIqvAU
-* OLD ISSUE - CLOSED - Github issue on selenium - Seleniu noted as "not a selenium issue" - https://github.com/SeleniumHQ/selenium/issues/7150
 
 ## WHAT I HAVE TRIED
 
