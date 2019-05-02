@@ -346,3 +346,7 @@ healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
+
+# specifically include logs
+!logs/docker_log.txt
+!logs/goodrun_log.txt
