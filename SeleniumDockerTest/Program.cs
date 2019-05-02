@@ -11,6 +11,7 @@ namespace SeleniumDockerTest
     class Program
     {
         static string m_targetUrl;
+        static string sep = @"--------------------------------------------------------------------------------------";
 
         static void Main(string[] args)
         {
@@ -26,19 +27,23 @@ namespace SeleniumDockerTest
 
 
             // TestFireFoxDriver();
-            //DoFirefoxTests();
+            DoFirefoxTests();
 
             ConsHelper.Info("skipping firefox test for now");
 
             // TestChromeDriver();
             DoChromeTests();
 
+            // same result w page crash
+            //DoChromeTests(5);
+
             ConsHelper.Pause();
         }
 
         private static void DoChromeTests()
         {
-            ConsHelper.Info("beginning chrome tests");
+            ConsHelper.Info(sep);
+            ConsHelper.Info("SINGLE PASS CHROME TEST, AKA NORMAL");
 
             IWebDriver chromeDriver;
             try
@@ -55,8 +60,11 @@ namespace SeleniumDockerTest
                 option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "--user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
                 option.AddArgument("--log-net-log=/tmp/chrome/netlog.txt");
 
-                // privileged mode from https://github.com/elgalu/docker-selenium/issues/20
-                option.AddArgument("--privileged");
+                // https://github.com/elgalu/docker-selenium/issues/20#issuecomment-407101358
+                // option.AddArgument("--disable-dev-shm-usage");
+
+                // NOPE - privileged mode from https://github.com/elgalu/docker-selenium/issues/20
+                // option.AddArgument("--privileged");
 
                 // random stuff from https://peter.sh/experiments/chromium-command-line-switches/
                 // still crashed in container
@@ -128,6 +136,106 @@ namespace SeleniumDockerTest
             }
         }
 
+        private static OpenQA.Selenium.Chrome.ChromeDriver GetChromeDriver(ChromeDriverService svc, ChromeOptions options, TimeSpan secstowait )
+        {
+            return new ChromeDriver(svc, options, secstowait);
+        }
+
+
+        // https://github.com/electron/electron/issues/9369#issuecomment-312234465
+        private static void DoChromeTests(int maxNumTrials)
+        {
+            ConsHelper.Info(sep);
+            ConsHelper.Info("beginning chrome tests with WebDriverException failure loop");
+            ConsHelper.Info(nameof(maxNumTrials), maxNumTrials.ToString());
+
+            bool isDriverReady = false;
+            int trial = 1;
+
+            OpenQA.Selenium.Chrome.ChromeDriver chromeDriver = null;
+
+            try
+            {
+                ChromeOptions option = new ChromeOptions();
+                option.AddArguments("--headless", "--disable-gpu", "--no-sandbox", "--user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
+                option.AddArgument("--log-net-log=/tmp/chrome/netlog.txt");
+
+                ConsHelper.Info("chrome options:", option.DumpArguments());
+
+                // using (chromeDriver = new ChromeDriver(option))
+                // driver = new FirefoxDriver(new FirefoxBinary(), profile, new TimeSpan(0, 0, 0, timeoutSeconds));
+                while ( !isDriverReady && (trial <= maxNumTrials ))
+                {
+                    ConsHelper.Info("chrometest->trial", trial.ToString());
+                    try
+                    {
+                        ChromeDriverService svc = ChromeDriverService.CreateDefaultService();
+
+                        // https://stackoverflow.com/questions/42803545/how-to-enable-chromedriver-logging-in-from-the-selenium-webdriver
+                        svc.EnableVerboseLogging = true;
+                        svc.LogPath = @"chromelog.txt";
+
+                        chromeDriver = GetChromeDriver(svc, option, TimeSpan.FromSeconds(60));
+                        chromeDriver.Navigate().GoToUrl(m_targetUrl);
+
+                        //TestChromeDriver();
+                        string msg = "hello world";
+                        Console.WriteLine();
+                        ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
+                        msg = "Matias";
+                        ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
+                        isDriverReady = true;
+                        ConsHelper.Info("completed test trial run", trial.ToString());
+                        CloseChromeDriver(chromeDriver);
+                    }
+                    catch (WebDriverException wde )
+                    {
+                        trial++;
+                        ConsHelper.Err($"!!!! WebDriverException failure on trial# {trial}");
+                        ConsHelper.Err(wde.Message);
+
+                        ConsHelper.Info("WebDriverException handler closing ChromeDriver");
+                        //CloseChromeDriver(chromeDriver);
+                        chromeDriver.Dispose();
+                        
+                        ConsHelper.Info("sleeping for 1000ms");
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                    catch ( Exception ex )
+                    {
+                        ConsHelper.Err("!!! general exception caught", ex.ToString());
+                        ConsHelper.Info("unrecoverable, exiting test");
+                        CloseChromeDriver(chromeDriver);
+                        return;
+                    }
+                    if ( ! isDriverReady )
+                    {
+                        ConsHelper.Err($"could not keep driver alive after {maxNumTrials} attempts");
+                    }
+                } // while
+            }
+            catch (Exception ex)
+            {
+                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                ConsHelper.Err("exception caught", ex.ToString());
+                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            }      
+        }
+
+        private static void CloseChromeDriver(ChromeDriver chromeDriver)
+        {
+            try
+            {
+                chromeDriver.Close();
+                chromeDriver.Quit();
+                chromeDriver.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ConsHelper.Err("!!! error closing down chromedriver", ex.ToString());
+            }
+        }
+
         static public bool CheckWebElements(string msg, IWebDriver driver)
         {
             if (string.IsNullOrWhiteSpace(msg)) return false;
@@ -185,6 +293,8 @@ namespace SeleniumDockerTest
         }
             private static void DoFirefoxTests()
         {
+            ConsHelper.Info(sep);
+
             ConsHelper.Info("firefox tests commencing");
             string fflocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
             ConsHelper.Info("BrowserExecutableLocation=" + fflocation);
@@ -223,9 +333,9 @@ namespace SeleniumDockerTest
             }
             catch (Exception ex)
             {
-                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                ConsHelper.Err(sep);
                 ConsHelper.Err("!!!error:" + ex.ToString());
-                ConsHelper.Err("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                ConsHelper.Err(sep);
             }
             ConsHelper.Info("firefox tests completed");
         }

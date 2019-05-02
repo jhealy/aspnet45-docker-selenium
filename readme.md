@@ -17,19 +17,29 @@ About line 473 we can see the docker run fail.  Up to that point the log file is
 
 * Docker issue (linux) on aug 11 2015 - /dev/shm sizing - https://github.com/elgalu/docker-selenium/issues/20 by kkochubey1
 * Docker issue (linux) march 2018 - https://github.com/pranavgore09/fabric8-planner/pull/3
+* ChromeDriver - https://github.com/rshf/chromedriver/issues/772
+* Chromium bug (linux) - https://bugs.chromium.org/p/chromium/issues/detail?id=522853
 
 ## THINGS I TRIED
 
+* chrome flags (many more than this but...)
+
+```c#
+option.AddArgument("--disable-dev-shm-usage"); // https://github.com/elgalu/docker-selenium/issues/20#issuecomment-407101358
+```
+
+* driver retry like this https://github.com/electron/electron/issues/9369#issuecomment-312234465
 * SHM mode. Command runs but did not resolve issue 
 
 ```powershell
 docker run -d --name aspnet48testsrun --shm-size="1g" -p 5000:80 aspnet48testsd
 ```
 
-* Infinite memory
+* memory
 
 ```
 docker run -d --name aspnet48testsrun -m inf --memory-swap inf -p 5000:80 aspnet48tests
+docker run -d --name aspnet48testsrun -m 2g -p 5000:80 aspnet48tests
 ```
 
 ## DOCKER RUN FAIL
