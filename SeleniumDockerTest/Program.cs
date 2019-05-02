@@ -23,11 +23,15 @@ namespace SeleniumDockerTest
 
             ConsHelper.Msg("Target Url",m_targetUrl);
 
+
+            // TestFireFoxDriver();
+            //DoFirefoxTests();
+
+            ConsHelper.Info("skipping firefox test for now");
+
             // TestChromeDriver();
             DoChromeTests();
 
-            // TestFireFoxDriver();
-            // DoFirefoxTests();
 
             ConsHelper.Pause();
         }
@@ -35,15 +39,26 @@ namespace SeleniumDockerTest
         private static void DoChromeTests()
         {
             ConsHelper.Info("beginning chrome tests");
+
             IWebDriver chromeDriver;
             try
             {
                 ChromeOptions option = new ChromeOptions();
-                option.AddArguments("--headless");
+                // base
+                //option.AddArguments("--headless");
+                //option.AddArguments("--no-sandbox");
+                //option.AddArguments("--disable-gpu");
+
+                // https://groups.google.com/a/chromium.org/forum/#!msg/headless-dev/qqbZVZ2IwEw/XMKlEMP3EQAJ
+                // must add --headless
+                // removed --single-process
+                option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "user-data-dir=/tmp/user-data", "--homedir=/tmp", "--disk-cache-dir=/tmp/cache-dir");
+
+                // option.AddArguments("--disable-dev-shm-usage");
+
                 // fix set from https://bugs.chromium.org/p/chromium/issues/detail?id=942023
-                option.AddArguments("--window-size=1920,1080");
-                option.AddArguments("--disable-features=VizDisplayCompositor");
-                option.AddArguments("--disable-gpu");
+                //option.AddArguments("--window-size=1920,1080");
+                // option.AddArguments("--disable-features=VizDisplayCompositor");
 
                 // https://github.com/SeleniumHQ/selenium/commit/32e764df90abfe64f4b4591243da71c4b9dd00a2
                 // option.AddArguments("--whitelisted-ips=http://localhost,https://localhost");
@@ -53,7 +68,16 @@ namespace SeleniumDockerTest
 
                 ConsHelper.Info("chrome options:", option.DumpArguments());
 
-                using (chromeDriver = new ChromeDriver(option))
+                // using (chromeDriver = new ChromeDriver(option))
+                // driver = new FirefoxDriver(new FirefoxBinary(), profile, new TimeSpan(0, 0, 0, timeoutSeconds));
+
+                ChromeDriverService svc = ChromeDriverService.CreateDefaultService();
+
+                // https://stackoverflow.com/questions/42803545/how-to-enable-chromedriver-logging-in-from-the-selenium-webdriver
+                svc.EnableVerboseLogging = true;
+                svc.LogPath= "nightmare.txt";
+
+                using ( chromeDriver = new ChromeDriver(svc, option, TimeSpan.FromSeconds(60)))
                 {
                     chromeDriver.Navigate().GoToUrl(m_targetUrl);
 

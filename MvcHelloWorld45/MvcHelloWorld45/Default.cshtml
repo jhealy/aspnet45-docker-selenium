@@ -1,5 +1,6 @@
 ﻿@{
     Page.Title = "Hello world page";
+
 }
 <html>
 <body style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
@@ -8,6 +9,12 @@
     <h3 id="myVer">3.0&nbsp;&nbsp;&gt;&lt;&lt;&lt;)o&gt;</h3>
     <div>
         <label>input area here:&nbsp;</label><input id="myText" type="text" />
+    </div>
+    <div>
+    @{ 
+        Response.Write("COUNTER=");
+        Response.Write(ApplicationInstance.Application["COUNTER"].ToString());
+    }
     </div>
 </body>
 </html>
