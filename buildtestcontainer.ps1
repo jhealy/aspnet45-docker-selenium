@@ -9,6 +9,4 @@ docker container ls
 
 # Invoke-WebRequest http:\\localhost:5000 -UseBasicParsing
 
-Write-Host "!!! here we should actually silent install FireFox and Chrome using exe if we dont get it working w choco"
-
 docker exec -it aspnet48testsrun powershell
