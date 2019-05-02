@@ -97,20 +97,6 @@ from tab crashed
    at SeleniumDockerTest.Program.DoChromeTests() in C:\dev\docker-selenium-aspnet45.git\SeleniumDockerTest\Program.cs:line 60]
 </pre>
 
-WebDriver Timeout error resolved -Occurs with either FireFox or Chrome tests inside docker container.  FIX (requires both items below):
-
-* Install websocket's into the docker container.  Excerpt from dockerfile:
-
-```powershell
-RUN powershell -Command Add-WindowsFeature Web-WebSockets
-```
-
-* Pass a very interesting set of options to the chromedriver.
-
-```C#
-option.AddArguments( "--headless","--disable-gpu", "--no-sandbox" );
-```
-
 ## TRY IT YOURSELF
 
 There is a docker image with Windows, IIS, Chrome, FF and some tests at https://cloud.docker.com/repository/docker/jhealy62/devfish .
@@ -140,3 +126,18 @@ Cry with me!
 
 * POSTED ISSUE - Aspnet docker github - https://github.com/Microsoft/aspnet-docker/issues/181
 
+## WHAT HAPPENED TO THE PAGE TIMEOUT ISSUE?
+
+WebDriver Timeout error resolved -Occurs with either FireFox or Chrome tests inside docker container.  FIX (requires both items below):
+
+* Install websocket's into the docker container.  Excerpt from dockerfile:
+
+```powershell
+RUN powershell -Command Add-WindowsFeature Web-WebSockets
+```
+
+* Pass a very interesting set of options to the chromedriver.
+
+```C#
+option.AddArguments( "--headless","--disable-gpu", "--no-sandbox" );
+```
