@@ -13,6 +13,25 @@ I turned on verbose debugging for selenium and trapped out logfiles.  I have two
 
 About line 473 we can see the docker run fail.  Up to that point the log file is exactly the same as the good run.  Then boom.  So what are we missing that makes the docker container fail at that point?  
 
+## SEEMS SIMILAR TO
+
+* Docker issue (linux) on aug 11 2015 - /dev/shm sizing - https://github.com/elgalu/docker-selenium/issues/20 by kkochubey1
+* Docker issue (linux) march 2018 - https://github.com/pranavgore09/fabric8-planner/pull/3
+
+## THINGS I TRIED
+
+* SHM mode. Command runs but did not resolve issue 
+
+```powershell
+docker run -d --name aspnet48testsrun --shm-size="1g" -p 5000:80 aspnet48testsd
+```
+
+* Infinite memory
+
+```
+docker run -d --name aspnet48testsrun -m inf --memory-swap inf -p 5000:80 aspnet48tests
+```
+
 ## DOCKER RUN FAIL
 
 <pre>

@@ -2,7 +2,6 @@ FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8
 
 RUN powershell -Command Add-WindowsFeature Web-WebSockets
 
-
 RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 RUN powershell -Command choco install googlechrome -y

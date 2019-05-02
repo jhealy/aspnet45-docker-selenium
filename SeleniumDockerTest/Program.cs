@@ -44,29 +44,57 @@ namespace SeleniumDockerTest
             try
             {
                 ChromeOptions option = new ChromeOptions();
-                // base
-                //option.AddArguments("--headless");
-                //option.AddArguments("--no-sandbox");
-                //option.AddArguments("--disable-gpu");
+                // base arguments to make it work headless
+                // option.AddArguments("--headless");
+                // option.AddArguments("--no-sandbox");
+                // option.AddArguments("--disable-gpu");
 
                 // https://groups.google.com/a/chromium.org/forum/#!msg/headless-dev/qqbZVZ2IwEw/XMKlEMP3EQAJ
                 // must add --headless
                 // removed --single-process
-                option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
+                option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "--user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
+                option.AddArgument("--log-net-log=/tmp/chrome/netlog.txt");
+
+                // privileged mode from https://github.com/elgalu/docker-selenium/issues/20
+                option.AddArgument("--privileged");
+
+                // random stuff from https://peter.sh/experiments/chromium-command-line-switches/
+                // still crashed in container
+                //option.AddArgument("--allow-insecure-localhost");  //enable tls/ssl errors on localhost to be ignored
+                //option.AddArgument("--allow-loopback-in-peer-connection"); // allow loopback interface to be added in network list for peer connection
+                //option.AddArgument("--allow-no-sandbox-job");
+                //option.AddArgument("--also-emit-success-logs");
+                //option.AddArgument("--deterministic-fetch"); //Instructs headless_shell to cause network fetches to complete in order of creation.This removes a significant source of network related non - determinism at the cost of slower page loads.
+                //option.AddArgument("--enable-crash-reporter"); // Enable crash reporter for headless                                                               
+                //option.AddArgument("--enable-tracing"); // enable tracing during browser tests, by default doesnt do much
+                //option.AddArgument("--enable-tracing-output=/tmp/chrome/tracingoutput.txt"); // where does tracing go
+                //option.AddArgument("--error-console");
+                //option.AddArgument("--force-presentation-receiver-for-testing");
+                //option.AddArgument("--force-renderer-accessibility");
+                //option.AddArgument("--log-level=1");
+                //option.AddArgument("--log-net-log=/tmp/chrome/netlog.txt");
+                //option.AddArgument("--no-first-run");
+                //option.AddArgument("--no-proxy-server");
+                //option.AddArgument("--use-fake-device-for-media-stream");
+                //option.AddArgument("--use-viz-hit-test"); // WindowServer uses the viz hit-test logic (HitTestAggregator and HitTestQuery)
+
+                // random stuff from https://peter.sh/experiments/chromium-command-line-switches/ that crashes headless
+                // option.AddArgument("--dump-dom"); // Instructs headless_shell to print document.body.innerHTML to stdout.
+                // option.AddArguments("--trace-startup", "--trace-startup-file=/tmp/chrome/startup.txt");// crashes headless
+                // option.AddArguments("--trace-shutdown", "--trace-shutdown-file=/tmp/chrome/shutdown.txt");// crashes headless
+                // option.AddArguments("--trace-to-file", "--trace-to-file-name=/tmp/chrome/tracetofile.txt");  // crashes headless
 
                 // option.AddArguments("--disable-dev-shm-usage");
-
                 // fix set from https://bugs.chromium.org/p/chromium/issues/detail?id=942023
                 //option.AddArguments("--window-size=1920,1080");
                 // option.AddArguments("--disable-features=VizDisplayCompositor");
-
                 // https://github.com/SeleniumHQ/selenium/commit/32e764df90abfe64f4b4591243da71c4b9dd00a2
                 // option.AddArguments("--whitelisted-ips=http://localhost,https://localhost");
-
                 //option.AddArgument("--no-sandbox");
                 //option.AddArgument("--dns-prefetch-disable");
 
                 ConsHelper.Info("chrome options:", option.DumpArguments());
+
 
                 // using (chromeDriver = new ChromeDriver(option))
                 // driver = new FirefoxDriver(new FirefoxBinary(), profile, new TimeSpan(0, 0, 0, timeoutSeconds));
@@ -75,7 +103,7 @@ namespace SeleniumDockerTest
 
                 // https://stackoverflow.com/questions/42803545/how-to-enable-chromedriver-logging-in-from-the-selenium-webdriver
                 svc.EnableVerboseLogging = true;
-                svc.LogPath= "chromelog.txt";
+                svc.LogPath= @"chromelog.txt";
 
                 using ( chromeDriver = new ChromeDriver(svc, option, TimeSpan.FromSeconds(60)))
                 {
