@@ -13,6 +13,10 @@ I turned on verbose debugging for selenium and trapped out logfiles.  I have two
 
 About line 473 we can see the docker run fail.  Up to that point the log file is exactly the same as the good run.  Then boom.  So what are we missing that makes the docker container fail at that point?  
 
+* Posted to Selenium:  https://github.com/SeleniumHQ/selenium/issues/7165
+* Posted to ASP.NET docker repo: https://github.com/Microsoft/aspnet-docker/issues/181
+* Posted to stackoverflow: https://stackoverflow.com/questions/55959477/selenium-inside-windows-docker-container-fails-with-ff-chrome-session-deleted-b
+
 ## SEEMS SIMILAR TO
 
 * Docker issue (linux) on aug 11 2015 - /dev/shm sizing - https://github.com/elgalu/docker-selenium/issues/20 by kkochubey1
