@@ -27,7 +27,7 @@ namespace SeleniumDockerTest
 
 
             // TestFireFoxDriver();
-            DoFirefoxTests();
+            // DoFirefoxTests();
 
             ConsHelper.Info("skipping firefox test for now");
 
@@ -49,15 +49,15 @@ namespace SeleniumDockerTest
             try
             {
                 ChromeOptions option = new ChromeOptions();
-                // base arguments to make it work headless
-                // option.AddArguments("--headless");
-                // option.AddArguments("--no-sandbox");
-                // option.AddArguments("--disable-gpu");
 
                 // https://groups.google.com/a/chromium.org/forum/#!msg/headless-dev/qqbZVZ2IwEw/XMKlEMP3EQAJ
                 // must add --headless
                 // removed --single-process
-                option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "--user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
+                // base arguments to make it work headless
+                option.AddArguments( "--headless","--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage");
+
+                // logging options
+                option.AddArguments("--user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
                 option.AddArgument("--log-net-log=/tmp/chrome/netlog.txt");
 
                 // https://github.com/elgalu/docker-selenium/issues/20#issuecomment-407101358
