@@ -13,7 +13,10 @@ I turned on verbose debugging for selenium and trapped out logfiles.  I have two
 
 About line 473 we can see the docker run fail.  Up to that point the log file is exactly the same as the good run.  Then boom.  So what are we missing that makes the docker container fail at that point?  
 
-* Posted to Selenium:  https://github.com/SeleniumHQ/selenium/issues/7165
+* Posted to Selenium:  https://github.com/SeleniumHQ/selenium/issues/7165 . Selenium has said it is not a Selenium issue via [@diego](https://github.com/diemol).  Microsoft support guy says its diff issues [@n777ty](https://github.com/n777ty)
+
+> "They are both related to running Selenium inside a Windows docker image, and the comment I mentioned above still applies. Whereas this is something interesting, there is not really a bug caused by Selenium, if you are looking for help I pointed out resources to get it, you could also ask in StackOverflow, or join us in the IRC/Slack channel where the community can help you as well."
+
 * Posted to ASP.NET docker repo: https://github.com/Microsoft/aspnet-docker/issues/181
 * Posted to stackoverflow: https://stackoverflow.com/questions/55959477/selenium-inside-windows-docker-container-fails-with-ff-chrome-session-deleted-b
 
