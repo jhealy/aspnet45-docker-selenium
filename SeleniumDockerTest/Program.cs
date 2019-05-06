@@ -60,6 +60,10 @@ namespace SeleniumDockerTest
                 option.AddArguments("--user-data-dir=/tmp/chrome/user-data", "--homedir=/tmp/chrome", "--disk-cache-dir=/tmp/chrome/cache-dir");
                 option.AddArgument("--log-net-log=/tmp/chrome/netlog.txt");
 
+                // 0505/19 - no effect
+                // --test-type parameter via https://stackoverflow.com/questions/38744632/in-jenkins-getting-this-error-org-openqa-selenium-webdriverexception-unknown-er?rq=1
+                // option.AddArgument("--test-type");
+
                 // https://github.com/elgalu/docker-selenium/issues/20#issuecomment-407101358
                 // option.AddArgument("--disable-dev-shm-usage");
 

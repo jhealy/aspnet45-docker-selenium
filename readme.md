@@ -11,14 +11,17 @@ Current status - when test is run in regular Windows 10 or Windows 2016 it runs 
 
 I turned on verbose debugging for selenium and trapped out logfiles.  I have two logfiles.  ["goodrun_log.txt"](logs/goodrun_log.txt) is from a Windows 10 successful test.  ["docker_log.txt"](logs/docker_log.txt) is the log from a failed run inside a container.
 
-About line 473 we can see the docker run fail.  Up to that point the log file is exactly the same as the good run.  Then boom.  So what are we missing that makes the docker container fail at that point?  
+About line 473 we can see the docker run fail.  Up to that point the log file is exactly the same as the good run.  Then boom.  So what are we missing that makes the docker container fail at that point?
 
+## THINGS PENDING
+
+* Submitted to chromedriver on 0506/19  - https://github.com/rshf/chromedriver/issues/825
+* Posted to ASP.NET docker repo on 0430/19 - no action -  https://github.com/Microsoft/aspnet-docker/issues/181
+* Posted to stackoverflow on 0502/19 - https://stackoverflow.com/questions/55959477/selenium-inside-windows-docker-container-fails-with-ff-chrome-session-deleted-b
+* hitting some internal microsoft email lists and contacts.  still pending.
 * Posted to Selenium:  https://github.com/SeleniumHQ/selenium/issues/7165 . Selenium has said it is not a Selenium issue via [@diego](https://github.com/diemol).  Microsoft support guy says its diff issues [@n777ty](https://github.com/n777ty)
 
 > "They are both related to running Selenium inside a Windows docker image, and the comment I mentioned above still applies. Whereas this is something interesting, there is not really a bug caused by Selenium, if you are looking for help I pointed out resources to get it, you could also ask in StackOverflow, or join us in the IRC/Slack channel where the community can help you as well."
-
-* Posted to ASP.NET docker repo: https://github.com/Microsoft/aspnet-docker/issues/181
-* Posted to stackoverflow: https://stackoverflow.com/questions/55959477/selenium-inside-windows-docker-container-fails-with-ff-chrome-session-deleted-b
 
 ## SEEMS SIMILAR TO
 
