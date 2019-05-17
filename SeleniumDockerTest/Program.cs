@@ -124,9 +124,11 @@ namespace SeleniumDockerTest
                     //TestChromeDriver();
                     string msg = "hello world";
                     Console.WriteLine();
-                    ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
+                    string element = "myH1";
+
+                    ConsHelper.Info($"CheckWebElements('{msg}','{element}')", CheckWebElements(msg, element, chromeDriver).ToString());
                     msg = "Matias";
-                    ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
+                    ConsHelper.Info($"CheckWebElements('{msg}','{element}')", CheckWebElements(msg, element, chromeDriver).ToString());
 
                     chromeDriver.Close();
                     chromeDriver.Quit();
@@ -185,9 +187,10 @@ namespace SeleniumDockerTest
                         //TestChromeDriver();
                         string msg = "hello world";
                         Console.WriteLine();
-                        ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
+                        string element = "myH1";
+                        ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, element, chromeDriver).ToString());
                         msg = "Matias";
-                        ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, chromeDriver).ToString());
+                        ConsHelper.Info($"CheckWebElements('{msg}')", CheckWebElements(msg, element, chromeDriver).ToString());
                         isDriverReady = true;
                         ConsHelper.Info("completed test trial run", trial.ToString());
                         CloseChromeDriver(chromeDriver);
@@ -240,11 +243,38 @@ namespace SeleniumDockerTest
             }
         }
 
-        static public bool CheckWebElements(string msg, IWebDriver driver)
+        static public bool CheckWebElements(string msg, string element, IWebDriver driver)
         {
+            
             if (string.IsNullOrWhiteSpace(msg)) return false;
+            if (string.IsNullOrWhiteSpace(element)) return false;
+
             msg = msg.ToLower();
-            return driver.FindElement(By.Id("myH1")).Text.ToLower().Contains(msg);
+
+            bool retval = true;
+
+            try
+            {
+                retval = driver.FindElement(By.Id(element)).Text.ToLower().Contains(msg);
+
+            }
+            catch (OpenQA.Selenium.NoSuchElementException nseExc )
+            {
+                ConsHelper.Err("!!! Exception caught - OpenQA.Selenium.NoSuchElementException");
+                ConsHelper.Info("Possible causes:");
+                ConsHelper.Info("The element you are after doesn't exist on the page");
+                ConsHelper.Info(@"You are not running against http://localhost, but a hard IP or domain name.  Only localhost is supported.");
+                ConsHelper.Info("element", element);
+                ConsHelper.Info(nseExc.Message);
+                retval = false;
+            }
+            catch ( Exception ex )
+            {
+                ConsHelper.Err("!!! Exception caught");
+                ConsHelper.Info(ex.Message);
+                retval = false;
+            }
+            return retval;
         }
 
         static public void TestChromeDriver()
@@ -327,9 +357,11 @@ namespace SeleniumDockerTest
 
                     //TestChromeDriver();
                     string msg = "hello world";
-                    ConsHelper.Info($"CheckWebElements('{msg}')={CheckWebElements(msg, firefoxDriver)}");
+                    string element = "myH1";
+
+                    ConsHelper.Info($"CheckWebElements('{msg}')={CheckWebElements(msg, element, firefoxDriver)}");
                     msg = "Matias";
-                    ConsHelper.Info($"CheckWebElements('{msg}')={CheckWebElements(msg, firefoxDriver)}");
+                    ConsHelper.Info($"CheckWebElements('{msg}')={CheckWebElements(msg, element, firefoxDriver)}");
 
                     firefoxDriver.Close();
                     firefoxDriver.Quit();
