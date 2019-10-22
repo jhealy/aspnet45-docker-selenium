@@ -6,6 +6,7 @@ RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((
 
 RUN powershell -Command choco install googlechrome -y
 RUN powershell -Command choco install firefox -y
+RUN powershell -Command choco install powershell-core -y
 
 # Brute force installers
 # RUN mkdir installers
