@@ -7,10 +7,11 @@ RUN mkdir seleniumtests
 # RUN mkdir seleniumtests/assets
 
 # copy in our website
-COPY ./MvcHelloWorld45/publish/ /inetpub/wwwroot/
+# COPY ./MvcHelloWorld45/publish/ /inetpub/wwwroot/
+COPY ./mvchelloworld45/  /inetpub/wwwroot/
 
 # copy in the tests
-COPY ./SeleniumDockerTest/bin/Release/ /seleniumtests/
+COPY ./SeleniumDockerTest/ /seleniumtests/
 
 # chromedriver is bundled into the official nuget
 # make sure geckodriver is there with the selenium tests
