@@ -54,3 +54,15 @@ Note we are now in an interactive shell inside our container.  Run the following
 ```powershell
 > .\1.ps1
 ```
+
+To exit the container and return to the shell of your local machine / vm type "exit" in the container and hit enter.
+
+```powershell
+> exit
+```
+
+To restart the container and rerun the test, issue the following command in a powershell window:
+
+```powershell
+> 
+```
