@@ -18,7 +18,7 @@ This document shows you how to build out a container that:
 * Issue the following command to clone the repo locally
 
 ```powershell
-> git clone https://github.com/jhealy/aspnet45-docker-selenium.git
+PS > git clone https://github.com/jhealy/aspnet45-docker-selenium.git
 ```
 
 ## MAKE SURE DOCKER IS SET TO WINDOWS CONTAINERS
@@ -32,7 +32,7 @@ This document shows you how to build out a container that:
 * Open a command prompt and issue the following command.  You should see info about the current state of docker.  If the command doesn't run something has happened to docker.
 
 ```powershell
-> docker system info
+PS > docker system info
 ```
 
 ![docker popup](images/docker-system-info.jpg)
@@ -47,17 +47,17 @@ Note running the docker builds, especially the first dockerfiles for the base co
 * Run the following commands.  You will be left inside the running container that is our test
 
 ```powershell
-> cd win10
-> .\win10.01.buildwin10.ps1
-> .\win10.02.buildaspnet.ps1
-> .\win10.03.buildbasecontainer.ps1
-> .\win10.04.buildtestcontainer.ps1
+PS > cd win10
+PS > .\win10.01.buildwin10.ps1
+PS > .\win10.02.buildaspnet.ps1
+PS > .\win10.03.buildbasecontainer.ps1
+PS > .\win10.04.buildtestcontainer.ps1
 ```
 
 Note we are now in an interactive shell inside our container.  Run the following command to run the test.  Test results are routed to the screen.
 
 ```powershell
-> .\1.ps1
+PS > .\1.ps1
 ```
 
 In the screenshot below, you can see the CheckWebElements call succeeded.
@@ -67,11 +67,5 @@ In the screenshot below, you can see the CheckWebElements call succeeded.
 To exit the container and return to the shell of your local machine / vm type "exit" in the container and hit enter.
 
 ```powershell
-> exit
-```
-
-To restart the container and rerun the test, issue the following command in a powershell window:
-
-```powershell
->
+PS > exit
 ```
