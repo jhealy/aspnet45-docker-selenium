@@ -43,18 +43,44 @@ Docker uses [dockerfiles](https://docs.docker.com/engine/reference/builder) to s
 
 Note running the docker builds, especially the first dockerfiles for the base containers can take a bit. The main time activity is downloading the base docker image. Make sure you have a fast network connection and a book to read.
 
-* Open a powershell window and navigate to the root of this repo.  
-* Run the following commands.  You will be left inside the running container that is our test
+* Open a powershell window and navigate to the win10 directory in the repo.
+* Run the command below.  Note this command can take up to 20 minutes to run so get coffee. This command does not need to run for each new test build.  We are using it to build out .NET Framework Win10 images.  Note the output shows the current image list on the machine.
 
 ```powershell
-PS > cd win10
 PS > .\win10.01.buildwin10.ps1
+```
+
+![docker popup](images/docker-build-01.jpg)
+
+* Run the following command to add asp.net support to our image.
+
+```powershell
 PS > .\win10.02.buildaspnet.ps1
+```
+
+![docker popup](images/docker-build-02.jpg)
+
+* Run the following command to enable websockets, as well as install chrome and firefox into our container using chocolatey.
+
+```powershell
 PS > .\win10.03.buildbasecontainer.ps1
+```
+
+![docker popup](images/docker-build-03.jpg)
+
+* Run the following command.  The website and selenium test are moved into our container.  You won't ordinarily see the screen below but it shows the copy operations begin run by the dockerfile.
+
+```powershell
 PS > .\win10.04.buildtestcontainer.ps1
 ```
 
-Note we are now in an interactive shell inside our container.  Run the following command to run the test.  Test results are routed to the screen.
+![docker popup](images/docker-build-04_1.jpg)
+
+* You will have been left in an interactive terminal inside the running container with the seleniumtest and website contained within.
+
+![docker popup](images/docker-build-04_2.jpg)
+
+* Note we are now in an interactive shell inside our container.  Run the following command to run the test.  Test results are routed to the screen, but could be dumped to logs for parsing, or any other options you can code.
 
 ```powershell
 PS > .\1.ps1
@@ -69,3 +95,5 @@ To exit the container and return to the shell of your local machine / vm type "e
 ```powershell
 PS > exit
 ```
+
+Carpe docker!
