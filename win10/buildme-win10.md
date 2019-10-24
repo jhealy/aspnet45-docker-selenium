@@ -25,12 +25,17 @@ This document shows you how to build out a container that:
 
 * Locate docker in the task bar of Win10 and click on it
 * If Docker has a menu entry that says "Switch to Linux containers..." you are fine.  This means you are in Windows container mode.
-* If Docker has a menu entry that says "Switch to Windows containers..." click it.  You are in Linux container mode and must switch to Windows containers.  Wait for docker to restart
+* If Docker has a menu entry that says "Switch to Windows containers..." click it.  You are in Linux container mode and must switch to Windows containers.  Wait for docker to restart.
+
+![docker popup](images/docker-popup.jpg)
+
 * Open a command prompt and issue the following command.  You should see info about the current state of docker.  If the command doesn't run something has happened to docker.
 
 ```powershell
 > docker system info
 ```
+
+![docker popup](images/docker-system-info.jpg)
 
 ## BUILD OUR CONTAINERS
 
@@ -55,6 +60,10 @@ Note we are now in an interactive shell inside our container.  Run the following
 > .\1.ps1
 ```
 
+In the screenshot below, you can see the CheckWebElements call succeeded.
+
+![successful test run](images/win10-04-testrungood.jpg)
+
 To exit the container and return to the shell of your local machine / vm type "exit" in the container and hit enter.
 
 ```powershell
@@ -64,5 +73,5 @@ To exit the container and return to the shell of your local machine / vm type "e
 To restart the container and rerun the test, issue the following command in a powershell window:
 
 ```powershell
-> 
+>
 ```
