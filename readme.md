@@ -16,9 +16,7 @@ Findings
 
 ## WIN10 FOR THE WIN
 
-Put steps to run the tests here....
-Put in a separate dock to setup and run in your environment.
-Have zips for the mvc and selenium binaries for no hassle publish, instead of having to build the solution.
+Windows 10 containers are able to run Selenium tests.  See the instructions at [how to build a Selenium / .NET Framework / Windows 10 container](win10/buildme-win10.md) to get going.
 
 ### SEEMS SIMILAR TO
 
