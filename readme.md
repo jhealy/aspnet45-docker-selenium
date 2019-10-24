@@ -1,20 +1,37 @@
 # DOCKER WITH SELENIUM AND ASP.NET 4.5 MVC
 
-What am I trying to do?
-
-This is my personal quest to have a  docker image that
-
 * Runs an ASP.NET MVC 4.5 web app
-* Has selenium driver via a c# console exe testing the code
+* Has selenium driver via a c# console exe testing the code successfully
 
-Current status - when test is run in regular Windows 10 or Windows 2016 it runs fine.  When the test is run in a Windows docker container it blows out with "***session deleted because of page crash***".
+## ISSUE AND RESOLUTION
 
-I turned on verbose debugging for selenium and trapped out logfiles.  I have two logfiles.  ["goodrun_log.txt"](logs/goodrun_log.txt) is from a Windows 10 successful test.  ["docker_log.txt"](logs/docker_log.txt) is the log from a failed run inside a container.
+* When the Selenium test is run in Windows 10 or Windows 2016 (on-the-box or VM) it runs fine.  
+* When the Selenium test is run in a Windows Server docker container, the test fails with "***session deleted because of page crash***".
+* When the Selenium test is run in a Windows 10 container in docker, the test executes successfully.
 
-About line 473 we can see the docker run fail.  Up to that point the log file is exactly the same as the good run.  Then boom.  So what are we missing that makes the docker container fail at that point?
+Findings
 
-## THINGS PENDING
+* You cannot run a Selenium test in a Windows Server container at this point.  Prove me wrong please.
+* You CAN run a Selenium test in a Windows 10 container.
 
+## WIN10 FOR THE WIN
+
+Put steps to run the tests here....
+Put in a separate dock to setup and run in your environment.
+Have zips for the mvc and selenium binaries for no hassle publish, instead of having to build the solution.
+
+### SEEMS SIMILAR TO
+
+* Docker issue (linux) on aug 11 2015 - /dev/shm sizing - https://github.com/elgalu/docker-selenium/issues/20 by kkochubey1
+* Docker issue (linux) march 2018 - https://github.com/pranavgore09/fabric8-planner/pull/3
+* ChromeDriver - https://github.com/rshf/chromedriver/issues/772
+* Chromium bug (linux) - https://bugs.chromium.org/p/chromium/issues/detail?id=522853
+
+### POSTED, BUT NO SOLUTIONS
+
+I posted this around quite a bit.  Below are the publish points.  I need to go and post responses to each of the items identifying Win10 containers as a possible solution for the issue.
+
+* Submitted to - Aspnet docker github - https://github.com/Microsoft/aspnet-docker/issues/181
 * Submitted to chromedriver on 0506/19  - https://github.com/rshf/chromedriver/issues/825
 * Posted to ASP.NET docker repo on 0430/19 - no action -  https://github.com/Microsoft/aspnet-docker/issues/181
 * Posted to stackoverflow on 0502/19 - https://stackoverflow.com/questions/55959477/selenium-inside-windows-docker-container-fails-with-ff-chrome-session-deleted-b
@@ -23,36 +40,35 @@ About line 473 we can see the docker run fail.  Up to that point the log file is
 
 > "They are both related to running Selenium inside a Windows docker image, and the comment I mentioned above still applies. Whereas this is something interesting, there is not really a bug caused by Selenium, if you are looking for help I pointed out resources to get it, you could also ask in StackOverflow, or join us in the IRC/Slack channel where the community can help you as well."
 
-## SEEMS SIMILAR TO
+## WINDOWS SERVER CONTAINER EFFORTS
 
-* Docker issue (linux) on aug 11 2015 - /dev/shm sizing - https://github.com/elgalu/docker-selenium/issues/20 by kkochubey1
-* Docker issue (linux) march 2018 - https://github.com/pranavgore09/fabric8-planner/pull/3
-* ChromeDriver - https://github.com/rshf/chromedriver/issues/772
-* Chromium bug (linux) - https://bugs.chromium.org/p/chromium/issues/detail?id=522853
+Significant effort was spent trying to get the container to run in a variety of Windows Server containers.  Some of the efforts are documented below.
 
-## THINGS I TRIED
+* Verbose logging enabled for selenium and trapped out logfiles.  You willfind two logfiles to reference.  ["goodrun_log.txt"](logs/goodrun_log.txt) is from a Windows 10 successful test.  ["docker_log.txt"](logs/docker_log.txt) is the log from a failed run inside a container.  See https://www.chromium.org/developers/design-documents/network-stack/netlog for info on how to enable logs for chromium.
 
-* chrome flags (many more than this but...)
+* About line 473 in ["docker_log.txt"](logs/docker_log.txt)  he docker run fails.  Up to that point the log file is exactly the same as the Win10 successful text execution, as referenced in line 473 of good run, as refed in ["goodrun_log.txt"](logs/goodrun_log.txt).  
+
+* A variety of Chrome flags were tried.  For reference, see the MvcHelloWorld45 for commented out flags.  File Program.cs, line 68 and onward.  An example is below for --disable-dev-shm-usage. 
 
 ```c#
 option.AddArgument("--disable-dev-shm-usage"); // https://github.com/elgalu/docker-selenium/issues/20#issuecomment-407101358
 ```
 
-* driver retry like this https://github.com/electron/electron/issues/9369#issuecomment-312234465
-* SHM mode. Command runs but did not resolve issue 
+* Chromium driver retry pattern, not successful.  Reference https://github.com/electron/electron/issues/9369#issuecomment-312234465
+* Docker SHM mode. Command runs but did not resolve issue.
 
 ```powershell
 docker run -d --name aspnet48testsrun --shm-size="1g" -p 5000:80 aspnet48testsd
 ```
 
-* memory
+* Docker memory allocation, unsuccessful.
 
 ```
 docker run -d --name aspnet48testsrun -m inf --memory-swap inf -p 5000:80 aspnet48tests
 docker run -d --name aspnet48testsrun -m 2g -p 5000:80 aspnet48tests
 ```
 
-## DOCKER RUN FAIL
+### DOCKER RUN FAIL
 
 <pre>
 [1556732925.450][DEBUG]: DevTools WebSocket Event: DOM.documentUpdated 7FCEC12C5F4ADEA352BBA3DF3AF6075D {
@@ -84,7 +100,7 @@ from tab crashed
 [1556732925.552][DEBUG]: Log type 'browser' lost 0 entries on destruction
 </pre>
 
-## WIN10 RUN GOOD
+### WIN10 RUN GOOD
 
 <pre>
 [1556733552.098][DEBUG]: DevTools WebSocket Event: DOM.documentUpdated 193B5CE9ACD5F7CE56919120C68276A7 {
@@ -111,7 +127,7 @@ from tab crashed
 ... lots more ...
 </pre>
 
-## SESSION DELETED BECAUSE OF PAGE CRASH
+### SESSION DELETED BECAUSE OF PAGE CRASH
 
 <pre>
 PS C:\seleniumtests> .\SeleniumDockerTest.exe http://localhost
@@ -136,34 +152,6 @@ from tab crashed
    at SeleniumDockerTest.Program.DoChromeTests() in C:\dev\docker-selenium-aspnet45.git\SeleniumDockerTest\Program.cs:line 60]
 </pre>
 
-## TRY IT YOURSELF
-
-There is a docker image with Windows, IIS, Chrome, FF and some tests at https://cloud.docker.com/repository/docker/jhealy62/devfish .
-
-Pull it down the repo and provision it
-
-* docker pull jhealy62/devfish
-* docker run -d --name aspnettest -p 5000:80 jhealy62/devfish
-
-Powershell into the container
-
-* docker exec -it aspnettest powershell
-
-Inside the docker container, see the web server working
-
-* curl http://localhost -UseBasicParsing
-
-See the seleniumtest failing:
-
-* cd \
-* cd \seleniumtests
-* .\SeleniumDockerTests.exe http://localhost
-
-Cry with me!
-
-## NEXT STEPS
-
-* POSTED ISSUE - Aspnet docker github - https://github.com/Microsoft/aspnet-docker/issues/181
 
 ## WHAT HAPPENED TO THE PAGE TIMEOUT ISSUE?
 
