@@ -18,6 +18,8 @@ Findings
 
 Windows 10 containers are able to run Selenium tests.  See the instructions at [how to build a Selenium / .NET Framework / Windows 10 container](win10/buildme-win10.md) to get going.
 
+If you wish to see the Selenium tests crash (maybe you can make it work?) follow the instructions in the [How to build a Selenium / .NET Framework / Windows Server container](wns.net4-8/buildme-wns.md) doc.
+
 ### SEEMS SIMILAR TO
 
 * Docker issue (linux) on aug 11 2015 - /dev/shm sizing - https://github.com/elgalu/docker-selenium/issues/20 by kkochubey1
