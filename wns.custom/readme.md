@@ -6,6 +6,8 @@ This document shows you how to build out a container that:
 * Contains a selenium test executing against the Mvc45 web application
 * Runs in a container using Windows and .NET Framework 4.8
 
+NOTE: Images are currently not in tune with directory struction.  Mentally change win10 to windows-custom-image until it gets fixed! jhealy....
+
 ## PRE-REQUISITES
 
 * Windows 10 v.latest or Windows server to host docker desktop.  
@@ -47,7 +49,7 @@ Note running the docker builds, especially the first dockerfiles for the base co
 * Run the command below.  Note this command can take up to 20 minutes to run so get coffee. This command does not need to run for each new test build.  We are using it to build out .NET Framework Win10 images.  Note the output shows the current image list on the machine.
 
 ```powershell
-PS > .\win10.01.buildwin10.ps1
+PS > .\01.buildwindows.ps1
 ```
 
 ![docker popup](images/docker-build-01.jpg)
@@ -55,7 +57,7 @@ PS > .\win10.01.buildwin10.ps1
 * Run the following command to add asp.net support to our image.
 
 ```powershell
-PS > .\win10.02.buildaspnet.ps1
+PS > .\02.buildaspnet.ps1
 ```
 
 ![docker popup](images/docker-build-02.jpg)
@@ -63,7 +65,7 @@ PS > .\win10.02.buildaspnet.ps1
 * Run the following command to enable websockets, as well as install chrome and firefox into our container using chocolatey.
 
 ```powershell
-PS > .\win10.03.buildbasecontainer.ps1
+PS > .\03.buildbasecontainer.ps1
 ```
 
 ![docker popup](images/docker-build-03.jpg)
@@ -71,7 +73,7 @@ PS > .\win10.03.buildbasecontainer.ps1
 * Run the following command.  The website and selenium test are moved into our container.  You won't ordinarily see the screen below but it shows the copy operations begin run by the dockerfile.
 
 ```powershell
-PS > .\win10.04.buildtestcontainer.ps1
+PS > .\04.buildtestcontainer.ps1
 ```
 
 ![docker popup](images/docker-build-04_1.jpg)
@@ -83,7 +85,7 @@ PS > .\win10.04.buildtestcontainer.ps1
 * Note we are now in an interactive shell inside our container.  Run the following command to run the test.  Test results are routed to the screen, but could be dumped to logs for parsing, or any other options you can code.
 
 ```powershell
-PS > .\1.ps1
+PS > .\05.runtest.ps1
 ```
 
 In the screenshot below, you can see the CheckWebElements call succeeded.

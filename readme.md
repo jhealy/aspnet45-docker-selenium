@@ -16,7 +16,7 @@ Findings
 
 ## CUSTOM WINDOWS CONTAINER FOR THE WIN
 
-A custom Windows .NET Framework container can be built to run Selenium tests.  See the instructions at [how to build a Selenium / .NET Framework / Windows container](wns.custom/buildme-wnscustom.md) to get going.
+A custom Windows .NET Framework container can be built to run Selenium tests.  See the instructions at [how to build a Selenium / .NET Framework / Windows container](wns.custom/readme.md) to get going.
 
 If you wish to see the Selenium tests crash (maybe you can make it work?) follow the instructions in the [How to build a Selenium / .NET Framework / Windows Server container](wns.net4-8/buildme-wns.md) doc.
 

@@ -1,5 +1,5 @@
 # adding in tests
-FROM w10basecontainer
+FROM wincustombasecontainer
 
 # Install chocolately, pretty much game on after that
 
@@ -17,4 +17,4 @@ COPY ./SeleniumDockerTest/ /seleniumtests/
 # make sure geckodriver is there with the selenium tests
 COPY ./assets/geckodriver-v0.24.0-win64/ /seleniumtests/
 
-COPY ./1.ps1 /
+COPY ./05.runtest.ps1 /
