@@ -7,16 +7,16 @@
 
 * When the Selenium test is run in Windows 10 or Windows 2016 (on-the-box or VM) it runs fine.  
 * When the Selenium test is run in a Windows Server docker container, the test fails with "***session deleted because of page crash***".
-* When the Selenium test is run in a Windows 10 container in docker, the test executes successfully.
+* When the Selenium test is run in a custom build .NET Framework oriented container in docker, the test executes successfully.
 
 Findings
 
-* You cannot run a Selenium test in a Windows Server container at this point.  Prove me wrong please.
-* You CAN run a Selenium test in a Windows 10 container.
+* You cannot run a Selenium test in a stock Windows Server container at this point.  Prove me wrong please.
+* You CAN run a Selenium test in a custom built Windows container.
 
-## WIN10 FOR THE WIN
+## CUSTOM WINDOWS CONTAINER FOR THE WIN
 
-Windows 10 containers are able to run Selenium tests.  See the instructions at [how to build a Selenium / .NET Framework / Windows 10 container](win10/buildme-win10.md) to get going.
+A custom Windows .NET Framework container can be built to run Selenium tests.  See the instructions at [how to build a Selenium / .NET Framework / Windows container](wns.custom/buildme-wnscustom.md) to get going.
 
 If you wish to see the Selenium tests crash (maybe you can make it work?) follow the instructions in the [How to build a Selenium / .NET Framework / Windows Server container](wns.net4-8/buildme-wns.md) doc.
 
@@ -58,14 +58,14 @@ option.AddArgument("--disable-dev-shm-usage"); // https://github.com/elgalu/dock
 * Docker SHM mode. Command runs but did not resolve issue.
 
 ```powershell
-docker run -d --name aspnet48testsrun --shm-size="1g" -p 5000:80 aspnet48testsd
+PS> docker run -d --name aspnet48testsrun --shm-size="1g" -p 5000:80 aspnet48testsd
 ```
 
 * Docker memory allocation, unsuccessful.
 
-```
-docker run -d --name aspnet48testsrun -m inf --memory-swap inf -p 5000:80 aspnet48tests
-docker run -d --name aspnet48testsrun -m 2g -p 5000:80 aspnet48tests
+```powershell
+PS> docker run -d --name aspnet48testsrun -m inf --memory-swap inf -p 5000:80 aspnet48tests
+PS> docker run -d --name aspnet48testsrun -m 2g -p 5000:80 aspnet48tests
 ```
 
 ### DOCKER RUN FAIL
@@ -152,8 +152,7 @@ from tab crashed
    at SeleniumDockerTest.Program.DoChromeTests() in C:\dev\docker-selenium-aspnet45.git\SeleniumDockerTest\Program.cs:line 60]
 </pre>
 
-
-## WHAT HAPPENED TO THE PAGE TIMEOUT ISSUE?
+## WHAT HAPPENED TO THE PAGE TIMEOUT ISSUE
 
 WebDriver Timeout error resolved -Occurs with either FireFox or Chrome tests inside docker container.  FIX (requires both items below):
 
@@ -168,3 +167,7 @@ RUN powershell -Command Add-WindowsFeature Web-WebSockets
 ```C#
 option.AddArguments( "--headless","--disable-gpu", "--no-sandbox" );
 ```
+
+## THANKS
+
+To Craig W of Microsoft PG for helping me with this...

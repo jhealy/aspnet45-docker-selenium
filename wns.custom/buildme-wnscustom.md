@@ -1,14 +1,14 @@
-# SELENIUM TESTS FOR .NET FRAMEWORK 4.X IN A WINDOWS 10 CONTAINER
+# SELENIUM TESTS FOR .NET FRAMEWORK 4.X IN CUSTOM .NET FRAMEWORK CONTAINER
 
 This document shows you how to build out a container that:
 
 * Contains a Mvc45 web application
 * Contains a selenium test executing against the Mvc45 web application
-* Runs in a container using Windows 10 and .NET Framework 4.8
+* Runs in a container using Windows and .NET Framework 4.8
 
 ## PRE-REQUISITES
 
-* Windows 10 v.latest.  
+* Windows 10 v.latest or Windows server to host docker desktop.  
 * Install Docker for Windows into Windows 10. Other platforms may work but are not tested.  https://docs.docker.com/docker-for-windows/
 * Git for Windows and some knowledge of how to clone a repo down.  https://git-scm.com/download/win
 
