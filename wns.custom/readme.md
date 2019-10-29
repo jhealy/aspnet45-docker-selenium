@@ -76,8 +76,6 @@ PS > .\03.buildbasecontainer.ps1
 PS > .\04.buildtestcontainer.ps1
 ```
 
-![docker popup](images/docker-build-04_1.jpg)
-
 * You will have been left in an interactive terminal inside the running container with the seleniumtest and website contained within.
 
 ![docker popup](images/docker-build-04_2.jpg)
@@ -90,7 +88,7 @@ PS > .\05.runtest.ps1
 
 In the screenshot below, you can see the CheckWebElements call succeeded.
 
-![successful test run](images/win10-04-testrungood.jpg)
+![successful test run](images/docker-build-04_1.jpg)
 
 To exit the container and return to the shell of your local machine / vm type "exit" in the container and hit enter.
 
